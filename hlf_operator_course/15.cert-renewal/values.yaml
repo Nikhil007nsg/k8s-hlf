@@ -1,0 +1,9 @@
+certificates:
+  renewal:
+    orderer:
+      enabled: true
+      delta: "720h"
+    peer:
+      enabled: true
+      delta: "720h"
+
