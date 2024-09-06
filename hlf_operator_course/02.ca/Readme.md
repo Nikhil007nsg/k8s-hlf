@@ -26,19 +26,32 @@ reclaimPolicy: Delete
 # Create PersistentVolume 
 
 apiVersion: v1
+
 kind: PersistentVolume
+
 metadata:
+
   name: org1-ca
+  
   labels:
+  
     type: nfs
+    
 spec:
+
   storageClassName: local-storage  # Use the appropriate storage class
+  
   capacity:
+  
     storage: 10Gi
+    
   accessModes:
+  
     - ReadWriteOnce
   nfs:
+  
     path: /mnt/nfs_share/blockchain  # The path on the NFS server
+    
     server: 172.27.22.181  # The NFS server's IP address
 
 
@@ -47,6 +60,9 @@ kubectl create ns org1
 
 kubectl hlf ca create  --image=$CA_IMAGE --version=$CA_VERSION --storage-class=$SC --capacity=1Gi --name=org1-ca \
     --enroll-id=enroll --enroll-pw=enrollpw --hosts=org1-ca.$DOMAIN --istio-port=443 --namespace=org1
+
+kubectl hlf ca delete --name=org1-ca --namespace=org1
+
 ```
 
 ### Org2 CA
