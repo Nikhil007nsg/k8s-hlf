@@ -25,34 +25,25 @@ reclaimPolicy: Delete
 
 # Create PersistentVolume 
 
+```
 apiVersion: v1
-
 kind: PersistentVolume
-
 metadata:
-
-  name: org1-ca
-  
+  name: org2-ca
   labels:
-  
     type: nfs
-    
 spec:
-
   storageClassName: local-storage  # Use the appropriate storage class
-  
   capacity:
-  
     storage: 10Gi
-    
   accessModes:
-  
     - ReadWriteOnce
   nfs:
-  
     path: /mnt/nfs_share/blockchain  # The path on the NFS server
-    
     server: 172.27.22.181  # The NFS server's IP address
+```
+  
+
 
 
 ```bash
