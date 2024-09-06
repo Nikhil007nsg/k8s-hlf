@@ -3,7 +3,7 @@
 ```bash
 export SC=$(kubectl get sc -o=jsonpath='{.items[0].metadata.name}')
 export PEER_IMAGE=hyperledger/fabric-peer
-export PEER_VERSION=2.5.3
+export PEER_VERSION=2.5.5
 export DOMAIN=blockchain-network.online #localho.st when running in kind cluster
 ```
 
