@@ -4,14 +4,43 @@
 
 ```bash
 export SC=$(kubectl get sc -o=jsonpath='{.items[0].metadata.name}')
+export SC=$(kubectl get sc -o=jsonpath='{.items[?(@.metadata.name=="local-storage")].metadata.name}')
 export CA_IMAGE=hyperledger/fabric-ca
-export CA_VERSION=1.5.6
+export CA_VERSION=1.5.7
 export DOMAIN=blockchain-network.online #localho.st when running in kind cluster
+export DOMAIN=localho.st
 ```
 
 ## CA Setup
+# Create Storage-class
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: standard/local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Delete
 
 ### Org1 CA
+
+# Create PersistentVolume 
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: org1-ca
+  labels:
+    type: nfs
+spec:
+  storageClassName: local-storage  # Use the appropriate storage class
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /mnt/nfs_share/blockchain  # The path on the NFS server
+    server: 172.27.22.181  # The NFS server's IP address
+
 
 ```bash
 kubectl create ns org1
@@ -21,6 +50,25 @@ kubectl hlf ca create  --image=$CA_IMAGE --version=$CA_VERSION --storage-class=$
 ```
 
 ### Org2 CA
+
+# Create PersistentVolume 
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: org2-ca
+  labels:
+    type: nfs
+spec:
+  storageClassName: local-storage  # Use the appropriate storage class
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    path: /mnt/nfs_share/blockchain  # The path on the NFS server
+    server: 172.27.22.181  # The NFS server's IP address
+
 
 ```bash
 kubectl create ns org2
