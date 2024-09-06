@@ -53,6 +53,9 @@ kubectl create ns org1
 kubectl hlf ca create  --image=$CA_IMAGE --version=$CA_VERSION --storage-class=$SC --capacity=1Gi --name=org1-ca \
     --enroll-id=enroll --enroll-pw=enrollpw --hosts=org1-ca.$DOMAIN --istio-port=443 --namespace=org1
 
+kubectl hlf ca create  --image=$CA_IMAGE --version=$CA_VERSION --storage-class=$SC --capacity=1Gi --name=org1-ca \
+    --enroll-id=enroll --enroll-pw=enrollpw --hosts=org1-ca.$DOMAIN --istio-port=443 --namespace=org1 --output > org1-ca.yaml
+
 kubectl hlf ca delete --name=org1-ca --namespace=org1
 
 ```
