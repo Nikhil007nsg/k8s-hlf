@@ -13,6 +13,7 @@ export DOMAIN=localho.st
 
 ## CA Setup
 # Create Storage-class
+```
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -20,7 +21,7 @@ metadata:
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: WaitForFirstConsumer
 reclaimPolicy: Delete
-
+```
 ### Org1 CA
 
 # Create PersistentVolume 
@@ -29,7 +30,7 @@ reclaimPolicy: Delete
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: org2-ca
+  name: org1-ca
   labels:
     type: nfs
 spec:
@@ -59,7 +60,7 @@ kubectl hlf ca delete --name=org1-ca --namespace=org1
 ### Org2 CA
 
 # Create PersistentVolume 
-
+```
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -75,7 +76,7 @@ spec:
   nfs:
     path: /mnt/nfs_share/blockchain  # The path on the NFS server
     server: 172.27.22.181  # The NFS server's IP address
-
+```
 
 ```bash
 kubectl create ns org2
