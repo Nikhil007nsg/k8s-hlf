@@ -7,8 +7,8 @@ export SC=$(kubectl get sc -o=jsonpath='{.items[0].metadata.name}')
 export SC=$(kubectl get sc -o=jsonpath='{.items[?(@.metadata.name=="local-storage")].metadata.name}')
 export CA_IMAGE=hyperledger/fabric-ca
 export CA_VERSION=1.5.7
-export DOMAIN=blockchain-network.online #localho.st when running in kind cluster
 export DOMAIN=localho.st
+export DOMAIN=blockchain-network.online #localho.st when running in kind cluster
 ```
 
 ## CA Setup
